@@ -16,7 +16,7 @@
 #import <clevertap-react-native/CleverTapReactManager.h>
 
 #import <UserNotifications/UserNotifications.h>
-
+#import <React/RCTLinkingManager.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -37,7 +37,7 @@ static void InitializeFlipper(UIApplication *application) {
   [CleverTap autoIntegrate]; // integrate CleverTap SDK using the autoIntegrate option
   [[CleverTapReactManager sharedInstance] applicationDidLaunchWithOptions:launchOptions];
   [CleverTap setDebugLevel:3];
-  [self registerPush];
+  [self registerForPush];
   
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
@@ -62,25 +62,45 @@ static void InitializeFlipper(UIApplication *application) {
   return YES;
 }
 
-- (void)registerPush {
-    
+-(void) registerForPush {
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-    
-    UNNotificationAction *action1 = [UNNotificationAction actionWithIdentifier:@"action_1" title:@"Back" options:UNNotificationActionOptionNone];
-    UNNotificationAction *action2 = [UNNotificationAction actionWithIdentifier:@"action_2" title:@"Next" options:UNNotificationActionOptionNone];
-    UNNotificationAction *action3 = [UNNotificationAction actionWithIdentifier:@"action_3" title:@"View In App" options:UNNotificationActionOptionNone];
-    UNNotificationCategory *cat = [UNNotificationCategory categoryWithIdentifier:@"CTNotification" actions:@[action1, action2, action3] intentIdentifiers:@[] options:UNNotificationCategoryOptionNone];
-    
-    [center setNotificationCategories:[NSSet setWithObjects:cat, nil]];
-    
+    center.delegate = self;
     [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
-        if( !error ){
-            dispatch_async(dispatch_get_main_queue(), ^(void) {
-                [[UIApplication sharedApplication] registerForRemoteNotifications];
-            });
-        }
+    if(!error){
+      dispatch_async(dispatch_get_main_queue(), ^{
+         [[UIApplication sharedApplication] registerForRemoteNotifications];
+      });
+    }
     }];
+
 }
+//Device Token
+-(void) application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+  NSLog(@"Device Token : %@",deviceToken);
+
+}
+
+//Handle Deeplink
+-(BOOL) application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+    return [RCTLinkingManager application:app openURL:url options:options];
+    
+}
+
+-(BOOL)application:(UIApplication *)application willContinueUserActivityWithType:(NSString *)userActivityType{
+  
+  return TRUE;
+}
+
+-(void) userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler{
+    
+  self.resp = response.notification.request.content.userInfo;
+  completionHandler();
+}
+-(void) userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
+    completionHandler(UNAuthorizationOptionAlert | UNAuthorizationOptionBadge | UNAuthorizationOptionSound);
+}
+
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
