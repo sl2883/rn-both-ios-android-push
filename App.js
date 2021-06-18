@@ -9,6 +9,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     CleverTap.enableDeviceNetworkInfoReporting(true);
+    CleverTap.setDebugLevel(3);
+
     CleverTap.createNotificationChannel("generic","generic","generic",3,true);
 
   }
