@@ -12,6 +12,23 @@ class App extends Component {
     CleverTap.setDebugLevel(3);
 
     CleverTap.createNotificationChannel("generic","generic","generic",3,true);
+    
+    CleverTap.addListener(CleverTap.CleverTapProductConfigDidFetch, (event) => { 
+      console.log(event);
+
+      CleverTap.getProductConfigString('reward type', (err, res) => {
+        console.log('PC reward type val in string :', res, err);
+      });
+      
+      CleverTap.getNumber('price', (err, res) => {
+          console.log('PC price val in number :', res, err);
+      });
+      
+    });
+
+    CleverTap.setDefaultsMap({'price': 100, 'reward type': 'Bronze'});
+    CleverTap.fetchAndActivate();
+
     this.checkPermission();
   }
 
