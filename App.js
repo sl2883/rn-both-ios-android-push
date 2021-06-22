@@ -39,7 +39,12 @@ class App extends Component {
   checkPermission = async () => {
     const enabled = await firebase.messaging().hasPermission();
     if (enabled) {
+      if(Platform.OS === 'android') {
         this.getFcmToken();
+      }
+      else if (Platform.OS === 'ios') {
+        this.getAPNSToken();
+      }
     } else {
         //this.requestPermission();
     }
@@ -47,12 +52,21 @@ class App extends Component {
 
   getFcmToken = async () => {
      const fcmToken = await firebase.messaging().getToken();
+     
     if (fcmToken) {
       console.log(fcmToken);
       CleverTap.setPushToken(fcmToken, CleverTap.FCM);
        //await this.CleverTap.setPushTokenAsString(fcmToken, CleverTap.FCM);
     } else {
+    }
+  }
+
+  getAPNSToken = async () => {
+    const apnsToken = await firebase.messaging().getAPNSToken();
+    if( apnsToken) {
+      console.log(apnsToken);
       //this.showAlert('Failed', 'No token received');
+      CleverTap.setPushToken(apnsToken, "APNS");
     }
   }
 

@@ -5,7 +5,7 @@ platform :ios, '10.0'
 
 target 'rnpush' do
   config = use_native_modules!
-  pod 'CleverTap-iOS-SDK', '3.9.1'
+  pod 'CleverTap-iOS-SDK'
   use_react_native!(
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
