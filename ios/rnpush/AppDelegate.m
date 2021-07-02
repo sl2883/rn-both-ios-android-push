@@ -37,7 +37,6 @@ static void InitializeFlipper(UIApplication *application) {
   [CleverTap autoIntegrate]; // integrate CleverTap SDK using the autoIntegrate option
   [[CleverTapReactManager sharedInstance] applicationDidLaunchWithOptions:launchOptions];
   [CleverTap setDebugLevel:3];
-  [self registerForPush];
   
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);

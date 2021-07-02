@@ -22,6 +22,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 if (info.fromCleverTap) {
                     CleverTapAPI.createNotification(getApplicationContext(), extras);
                 }
+                else {
+                    super.onMessageReceived(message);
+                }
             }
         } catch (Throwable t) {
             Log.d("MYFCMLIST", "Error parsing FCM message", t);

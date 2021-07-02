@@ -48,6 +48,7 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     ActivityLifecycleCallback.register(this);	
     CleverTapAPI.setDebugLevel(3);
+    CleverTapAPI.createNotificationChannel(getApplicationContext(), "generic", "generic", "generic", 3, true);
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());

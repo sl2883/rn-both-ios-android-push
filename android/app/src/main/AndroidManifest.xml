@@ -30,10 +30,20 @@
       </activity>
 
       <service android:name="com.rnpush.MyFirebaseMessagingService">
-      <intent-filter>
-        <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-      </intent-filter>
-    </service>
+        <intent-filter>
+          <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+        </intent-filter>
+      </service>
+      <service
+        android:name="com.clevertap.android.sdk.pushnotification.CTNotificationIntentService"
+        android:exported="false">
+        <intent-filter>
+            <action android:name="com.clevertap.PUSH_EVENT" />
+        </intent-filter>
+      </service>
+      <meta-data
+          android:name="CLEVERTAP_BACKGROUND_SYNC"
+          android:value="1"/>
 
     </application>
 </manifest>

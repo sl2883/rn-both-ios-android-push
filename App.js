@@ -30,6 +30,8 @@ class App extends Component {
     CleverTap.fetchAndActivate();
 
     this.checkPermission();
+
+    CleverTap.registerForPush()
   }
 
   viewedEvent = () => {
