@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View, Button, StyleSheet} from 'react-native';
+import { Text, View, Button, Linking, StyleSheet, Alert} from 'react-native';
 
 const CleverTap = require('clevertap-react-native');
 import { firebase } from '@react-native-firebase/messaging';
@@ -26,12 +26,26 @@ class App extends Component {
       
     });
 
+    CleverTap.addListener(CleverTap.CleverTapPushNotificationClicked, (event) => { 
+      console.log(event);
+    });
+
     CleverTap.setDefaultsMap({'price': 100, 'reward type': 'Bronze'});
     CleverTap.fetchAndActivate();
 
     this.checkPermission();
 
     CleverTap.registerForPush()
+
+    Linking.addEventListener('url', ({url}) => {
+      console.log("[SuNNY] url rec: ", url)
+    })
+
+    const url = Linking.getInitialURL();
+    if (url) {
+      console.log("[SuNNY] url rec: ", url)
+    }
+
   }
 
   viewedEvent = () => {

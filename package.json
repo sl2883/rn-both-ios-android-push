@@ -12,7 +12,7 @@
   "dependencies": {
     "@react-native-firebase/app": "^12.1.0",
     "@react-native-firebase/messaging": "^12.1.0",
-    "clevertap-react-native": "^0.5.0",
+    "clevertap-react-native": "^0.5.2",
     "react": "17.0.1",
     "react-native": "0.64.0",
     "react-native-push-notification": "^7.3.1"

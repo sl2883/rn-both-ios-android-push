@@ -2,6 +2,9 @@
 #import <UIKit/UIKit.h>
 
 #import <UserNotifications/UserNotifications.h>
+#import <CleverTapSDK/CleverTap.h>
+#import <CleverTapReact/CleverTapReactManager.h>
+#import <React/RCTLinkingManager.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate, UNUserNotificationCenterDelegate>
 

@@ -211,7 +211,7 @@ center.delegate = self;
 }
 ```
 
-In your react code, you can also perform the following to request permission and send the APNS token to CleverTap.
+In your react code, you can also perform the following to request permission and send the APNS token to CleverTap. If you do that though, make sure to still set the delegate to self in AppDelegate.
 
 ```javascript
 CleverTapReact.registerForPush();
@@ -239,4 +239,52 @@ getAPNSToken =  async () => {
 	CleverTap.setPushToken(apnsToken, "APNS");
 	}
 }
+```
+
+Linking docs -
+```
+https://reactnative.dev/docs/linking
+https://blog.logrocket.com/understanding-deep-linking-in-react-native/
+
+```
+
+Error
+```
+error: Cycle inside FBReactNativeSpec; building could produce unreliable results. This usually can be resolved by moving the shell script phase '[CP-User] Generate Specs' so that it runs before the build phase that depends on its outputs.
+```
+
+Solution is to add the following in PodFile
+```swift
+post_install do |installer|
+    react_native_post_install(installer)
+    
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+      end
+      
+      if (target.name&.eql?('FBReactNativeSpec'))
+        target.build_phases.each do |build_phase|
+          if (build_phase.respond_to?(:name) && build_phase.name.eql?('[CP-User] Generate Specs'))
+            target.build_phases.move(build_phase, 0)
+          end
+        end
+      end
+    end
+  end
+```
+
+Error that CleverTap was not found
+- Update the podfile to have the right clevertap pod
+- make sure that the following headers are also in AppDelegate.h
+
+```objectivec
+#import <CleverTapSDK/CleverTap.h>
+#import <CleverTapReact/CleverTapReactManager.h>
+#import <React/RCTLinkingManager.h>
+```
+
+Running the app on device
+```
+ react-native run-ios --device
 ```

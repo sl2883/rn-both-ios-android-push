@@ -20,12 +20,25 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>billing-id</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>billing-app</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>CleverTapAccountID</key>
-	<string>TEST-779-684-5Z6Z</string>
+	<string>464-49W-WR6Z</string>
 	<key>CleverTapToken</key>
-	<string>TEST-4b6-caa</string>
+	<string>0c4-464</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
