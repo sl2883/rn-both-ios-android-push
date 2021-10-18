@@ -176,14 +176,6 @@ And for push amplifications
 
 **ios**
 
-- In your Podfile
-```swift
-target 'YOUR_TARGET_NAME' do
-	use_frameworks!
-	pod 'clevertap-react-native', :path =>'../node_modules/clevertap-react-native'
-end
-```
-
 From your terminal, run pod install from the xcode folder.
 
 - Add CT Credentials in Info.plist
@@ -281,7 +273,13 @@ Error that CleverTap was not found
 ```objectivec
 #import <CleverTapSDK/CleverTap.h>
 #import <CleverTapReact/CleverTapReactManager.h>
-#import <React/RCTLinkingManager.h>
+```
+
+For latest SDK
+```objectivec
+#import <CleverTap-iOS-SDK/CleverTap.h>
+#import <clevertap-react-native/CleverTapReactManager.h>
+
 ```
 
 Firebase error - undefined symbols architecture
@@ -292,4 +290,5 @@ https://stackoverflow.com/questions/42292090/firebase-undefined-symbols-for-arch
 Running the app on device
 ```
  react-native run-ios --device
+ npx react-native run-ios --device
 ```
