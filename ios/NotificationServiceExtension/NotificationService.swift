@@ -1,27 +1,21 @@
 //
 //  NotificationService.swift
-//  richnotif
+//  NotificationServiceExtension
 //
-//  Created by Sunny Ladkani on 7/2/21.
+//  Created by Sunny Ladkani on 10/18/21.
 //
 
 import UserNotifications
+import CleverTapSDK
+import CTNotificationService
 
-class NotificationService: UNNotificationServiceExtension {
+class NotificationService: CTNotificationServiceExtension {
 
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
 
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        self.contentHandler = contentHandler
-        bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
-        
-        if let bestAttemptContent = bestAttemptContent {
-            // Modify the notification content here...
-            bestAttemptContent.title = "\(bestAttemptContent.title) [modified]"
-            
-            contentHandler(bestAttemptContent)
-        }
+        super.didReceive(request, withContentHandler: contentHandler)
     }
     
     override func serviceExtensionTimeWillExpire() {

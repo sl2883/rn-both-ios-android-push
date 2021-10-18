@@ -32,6 +32,17 @@ target 'rnpush' do
         end
       end
     end
+    
+    installer.pods_project.targets.each do |target|
+        if ['RNFBApp', 'RNFBMessaging'].include?(target.name)
+          target.add_system_framework(installer.pods_project.targets.find{|target| target.name == 'GoogleUtilities'})
+        elsif target.name.eql?('RNFBAnalytics')
+          target.add_system_framework(installer.pods_project.targets.find{|target| target.name == 'FirebaseAnalytics'})
+          target.add_system_framework(installer.pods_project.targets.find{|target| target.name == 'GoogleAppMeasurement'})
+          target.add_system_framework(installer.pods_project.targets.find{|target| target.name == 'nanopb'})
+          target.add_system_framework(installer.pods_project.targets.find{|target| target.name == 'GoogleUtilities'})
+        end
+      end
   end
 
   # Enables Flipper.
@@ -44,4 +55,9 @@ target 'rnpush' do
   #   react_native_post_install(installer)
   #   flipper_post_install(installer)
   # end
+end
+
+target 'NotificationServiceExtension' do
+  pod 'CTNotificationService'
+  pod 'CleverTap-iOS-SDK'
 end
