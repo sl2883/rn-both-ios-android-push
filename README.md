@@ -284,6 +284,11 @@ Error that CleverTap was not found
 #import <React/RCTLinkingManager.h>
 ```
 
+Firebase error - undefined symbols architecture
+```
+https://stackoverflow.com/questions/42292090/firebase-undefined-symbols-for-architecture-x86-64
+```
+
 Running the app on device
 ```
  react-native run-ios --device

@@ -91,8 +91,12 @@ class App extends Component {
   }
 
   loginEvent = () => {
-    var profile = ({'Name': 'testUserA1', 'Identity': '423423', 'Email': 'dsad@fsdfsd.com', 'custom1': 123});
-    onUserLogin(profile);
+    var RandomNumber = Math.floor(Math.random() * 100) + 1 ;
+    var user = 'User MSG-Whatsapp ' + RandomNumber.toString();
+    var phone = '+151094471' + RandomNumber.toString();
+    var profile = ({'Name': user, 'Phone': phone, 'MSG-whatsapp': true, 'passing-msg-whatsapp-value': true, 'Identity': user, 'userId': 'User MSG-Whatsapp'});
+    CleverTap.onUserLogin(profile);
+    alert(user);
   }
 
   render() {
