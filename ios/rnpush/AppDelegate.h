@@ -5,8 +5,9 @@
 #import <CleverTapSDK/CleverTap.h>
 #import <CleverTapReact/CleverTapReactManager.h>
 #import <React/RCTLinkingManager.h>
+#import <CleverTapSDK/CleverTapPushNotificationDelegate.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate, UNUserNotificationCenterDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate, UNUserNotificationCenterDelegate, CleverTapPushNotificationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic,strong) NSDictionary *resp;

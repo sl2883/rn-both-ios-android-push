@@ -17,6 +17,7 @@
 
 #import <UserNotifications/UserNotifications.h>
 #import <React/RCTLinkingManager.h>
+#import <CleverTapSDK/CleverTapPushNotificationDelegate.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -37,6 +38,7 @@ static void InitializeFlipper(UIApplication *application) {
   [CleverTap autoIntegrate]; // integrate CleverTap SDK using the autoIntegrate option
   [[CleverTapReactManager sharedInstance] applicationDidLaunchWithOptions:launchOptions];
   [CleverTap setDebugLevel:3];
+  [[CleverTap sharedInstance] setPushNotificationDelegate:self];
   
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
@@ -102,6 +104,11 @@ static void InitializeFlipper(UIApplication *application) {
 -(void) userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
     completionHandler(UNAuthorizationOptionAlert | UNAuthorizationOptionBadge | UNAuthorizationOptionSound);
 }
+
+- (void)pushNotificationTappedWithCustomExtras:(NSDictionary *)customExtras {
+    
+      NSLog(@"Push Notification Tapped with Custom Extras: %@", customExtras);
+ }
 
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
